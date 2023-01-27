@@ -1,68 +1,37 @@
-<style>
-     .content-table thead tr{
-        background-color: #131313d6;
-        color: white;
-        text-align: left;
-        font-weight: bold;
-    }
-</style>
-<section class="content">
-    <div class="container-fluid">
+{% if request.user.is_authenticated %}
 
-    <div class="row">
-        <div class="col-md-12">
-              
-    <div class="card">
-    <div class="card-header">
-    <h3 class="card-title">View customers</h3>
-    </div>
-    <!-- /.card-header -->
-            <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped content-table" >
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>mothername</th>
-                    <th>email</th>
-                    <th>actions</th>
-                    
-                     
-                </tr>                         
-
-    </thead>
-                
-                <tbody>
-                    {% for customer in customers %}
-                    <tr>
-                        <td>{{customer.id}}</td>
-                        <td>{{customer.mothername}}</td>
-                        <td>{{customer.email}}</td>
-                        <td>{{customer.gender}}</td>
-                        <td>{{customer.birthday}}</td>
-                        <td>{{customer.bloodgroup}}</td>
-                       
-                        
-
-                        
-                        
-
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            
-            
-    </table>
+  <p>{{request.user}}</p>
+<a href="{% url 'logout' %}">logout</a>
+{% else %}
+<a href="{% url 'login' %}">login</a>
+{% endif %}
+<hr>
+<h1>view customer</h1>
+<a href={% url 'add-cust' %}>ADD</a>
 
 
-</div>
-
-
-</div>
-</div>
-
-
-
-</div>
-</div>
-</div>
-</section>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>fullname</th>
+    <th>email</th>
+    <th>mothersname</th>
+    <th>nationality</th>
+    <th>bloodgroup</th>
+    <th></th>
+  </tr>
+  {% for cust in customers %}
+  <tr>
+    <td>{{cust.id}}</td>
+    <td>{{cust.fullname}}</td>
+    <td>{{cust.email}}</td>
+    <td>{{cust.mothername}}</td>
+    <td>{{cust.nationality}}</td>
+    <td>{{cust.blood_group}}</td>
+    <td><a href={% url 'customer-detail' cust.id %}>View</a></td>
+    
+  </tr>
+  {% empty %}
+  <h3>no customers in the list</h3>
+  {% endfor %}
+</table>
