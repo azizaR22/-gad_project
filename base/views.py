@@ -73,3 +73,6 @@ def add_custom(request):
             messages.error(request, "error occured")
     context={"form": form}
     return render(request,'add_customers.html',context)
+
+
+    
