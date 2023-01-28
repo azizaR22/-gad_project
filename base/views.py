@@ -7,6 +7,9 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -24,13 +27,13 @@ def loginPage(request):
                 login(request, user=user)
                 return redirect("home")
     context = {"authenticationForm": authenticationForm}
-    return render(request, "login.html", context)
+    return render(request, "base/login.html", context)
 
 
 @login_required(login_url="login")
 def home(request):
     context = {}
-    return render(request, "home.html", context)
+    return render(request, "base/home.html", context)
 
 
 @login_required(login_url="login")
@@ -58,11 +61,10 @@ def registration(request):
     return render(request, "registration.html", context)
 
 
-def view_cus(request):
-    form = Customerform()
-    customers = Customer.objects.all()
-    context = {"customers": customers, "form": form}
-    return render(request, "view_customers.html", context)
+class Customer_list(ListView):
+    model = Customer
+    context_object_name = "customers"
+    template_name = "base/view_customers.html"
 
 
 def add_custom(request):
@@ -76,10 +78,17 @@ def add_custom(request):
         else:
             messages.error(request, "error occured")
     context = {"form": form}
-    return render(request, "add_customers.html", context)
+    return render(request, "base/add_customers.html", context)
 
 
 class Customer_detail(DetailView):
     model = Customer
-    context_object_name = "cust"
-    template_name = "view_customers.html"
+    context_object_name = "customer"
+    template_name = "base/view_customers.html"
+
+
+class Customer_update(UpdateView):
+    model = Customer
+    fields = "__all__"
+    success_url = reverse_lazy("view-cust")
+    template_name = "base/add_customers.html"

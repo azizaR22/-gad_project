@@ -40,7 +40,7 @@ class Customer(models.Model):
 
 
 class Account(models.Model):
-    account_name = models.CharField(max_length=200,null=True, blank=True)
+    account_name = models.CharField(max_length=200, null=True, blank=True)
     account_number = models.PositiveIntegerField(null=True, blank=True)
     account_type = models.CharField(max_length=200, null=False, blank=True)
     amount = models.PositiveIntegerField(null=True, blank=True)

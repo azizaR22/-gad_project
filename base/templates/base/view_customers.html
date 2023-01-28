@@ -9,7 +9,7 @@
 <h1>view customer</h1>
 <a href={% url 'add-cust' %}>ADD</a>
 
-
+{{customer}}
 <table>
   <tr>
     <th>ID</th>
@@ -20,18 +20,19 @@
     <th>bloodgroup</th>
     <th></th>
   </tr>
-  {% for cust in customers %}
+  {% for customer in customers %}
   <tr>
-    <td>{{cust.id}}</td>
-    <td>{{cust.fullname}}</td>
-    <td>{{cust.email}}</td>
-    <td>{{cust.mothername}}</td>
-    <td>{{cust.nationality}}</td>
-    <td>{{cust.blood_group}}</td>
-    <td><a href={% url 'customer-detail' cust.id %}>View</a></td>
+    <td>{{customer.id}}</td>
+    <td>{{customer.fullname}}</td>
+    <td>{{customer.email}}</td>
+    <td>{{customer.mothername}}</td>
+    <td>{{customer.nationality}}</td>
+    <td>{{customer.blood_group}}</td>
+    <td><a href={% url 'customer-detail' customers.id %}>View</a></td>
+    <td><a href={% url 'customer-update' customer.id %}>edit</a></td>
     
   </tr>
   {% empty %}
-  <h3>no customers in the list</h3>
+  <h3>no customers in  the list</h3>
   {% endfor %}
 </table>
